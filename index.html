@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aty | Artist</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0f172a;
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 50%;
+            animation: float 20s infinite alternate;
+        }
+
+        @keyframes float {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(20%, 20%); }
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 8%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            backdrop-filter: blur(15px);
+            background: rgba(15, 23, 42, 0.85);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #fff, var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 400;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--primary); }
+
+        /* --- HERO --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-title i { font-weight: 400; font-style: italic; color: var(--secondary); -webkit-text-fill-color: var(--secondary); }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 650px;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- BUTTONS --- */
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cta-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4); }
+
+        /* --- GALLERY --- */
+        section { padding: 120px 8%; }
+        .section-header { margin-bottom: 5rem; text-align: center; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 3rem; position: relative; display: inline-block; }
+        .section-header h2::after { content: ''; width: 50%; height: 3px; background: var(--primary); position: absolute; bottom: -10px; left: 25%; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .art-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+        }
+
+        .art-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
+        .art-card:hover img { transform: scale(1.1); filter: grayscale(0.2) brightness(0.6); }
+
+        .art-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.4);
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .art-card:hover .art-overlay { opacity: 1; }
+
+        .hidden { display: none; }
+
+        /* --- PRICING SECTION --- */
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .price-card {
+            background: var(--glass);
+            padding: 3rem 2rem;
+            border-radius: 35px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card:hover { border-color: var(--secondary); transform: translateY(-10px); background: rgba(255,255,255,0.05); }
+
+        .price-card h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--light); }
+        .price-card .price-amount { font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem; }
+        .price-card .price-desc { color: #94a3b8; margin-bottom: 2rem; font-size: 0.95rem; }
+
+        .bg-addon {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px dashed var(--primary);
+            padding: 0.5rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            color: #c7d2fe;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--glass);
+            padding: 4rem;
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .social-btn i { font-size: 2rem; }
+        .social-btn:hover { background: var(--primary); transform: translateY(-5px); }
+        .social-btn.paypal:hover { background: #003087; }
+        .social-btn.reddit:hover { background: #FF4500; }
+        .social-btn.telegram:hover { background: #0088cc; }
+        .social-btn.email:hover { background: #ea4335; }
+
+        /* --- MOBILE HAMBURGER --- */
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; }
+        .bar { width: 28px; height: 3px; background: white; border-radius: 10px; transition: 0.3s; }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px; left: 0; width: 100%;
+                background: #0f172a;
+                flex-direction: column;
+                padding: 3rem;
+                text-align: center;
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob"></div>
+
+    <nav>
+        <div class="logo">Aty</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#gallery" onclick="toggleMenu()">Gallery</a></li>
+            <li><a href="#pricing" onclick="toggleMenu()">Pricing</a></li>
+            <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
+        <h1 class="hero-title">Aty’s <i>Art</i></h1>
+        <p class="hero-subtitle">High-fidelity illustrations and conceptual sketches. Bringing imagination to life with professional digital artistry.</p>
+        <a href="#gallery" class="cta-btn">View Works</a>
+    </header>
+
+    <section id="gallery">
+        <div class="section-header">
+            <h2>Portfolio</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="art-card">
+                <img src="d1.jpg" alt="Artwork 1">
+                <div class="art-overlay"><h3>Artwork 01</h3></div>
+            </div>
+            <div class="art-card">
+                <img src="d2.jpg" alt="Artwork 2">
+                <div class="art-overlay"><h3>Artwork 02</h3></div>
+            </div>
+            <div class="art-card">
+                <img src="d3.jpg" alt="Artwork 3">
+                <div class="art-overlay"><h3>Artwork 03</h3></div>
+            </div>
+
+            <div class="art-card hidden"><img src="d4.jpg" alt="Artwork 4"></div>
+            <div class="art-card hidden"><img src="d5.jpg" alt="Artwork 5"></div>
+            <div class="art-card hidden"><img src="d6.jpg" alt="Artwork 6"></div>
+            <div class="art-card hidden"><img src="d7.jpg" alt="Artwork 7"></div>
+            <div class="art-card hidden"><img src="d8.jpg" alt="Artwork 8"></div>
+            <div class="art-card hidden"><img src="d9.jpg" alt="Artwork 9"></div>
+            <div class="art-card hidden"><img src="d10.jpg" alt="Artwork 10"></div>
+            <div class="art-card hidden"><img src="d11.jpg" alt="Artwork 11"></div>
+            <div class="art-card hidden"><img src="d12.jpg" alt="Artwork 12"></div>
+            <div class="art-card hidden"><img src="d13.jpg" alt="Artwork 13"></div>
+            <div class="art-card hidden"><img src="d14.jpg" alt="Artwork 14"></div>
+            <div class="art-card hidden"><img src="d15.jpg" alt="Artwork 15"></div>
+        </div>
+        <div style="text-align: center; margin-top: 4rem;">
+            <button class="cta-btn" id="loadBtn" onclick="showAll()">Show All Works</button>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="section-header">
+            <h2>Pricing</h2>
+        </div>
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>Sketch</h3>
+                <div class="price-amount">$15 — $30</div>
+                <p class="price-desc">Loose lines and conceptual forms.</p>
+                <div class="bg-addon">+ $10 for Additional Background</div>
+            </div>
+
+            <div class="price-card">
+                <h3>Black & White</h3>
+                <div class="price-amount">$50 — $60</div>
+                <p class="price-desc">Clean lineart with value shading.</p>
+                <div class="bg-addon">+ $10 for Additional Background</div>
+            </div>
+
+            <div class="price-card" style="border-color: var(--primary);">
+                <h3>Full Color</h3>
+                <div class="price-amount">$80 — $100</div>
+                <p class="price-desc">High-fidelity rendering and textures.</p>
+                <div class="bg-addon">+ $10 for Additional Background</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-container">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem;">Get In Touch</h2>
+            <div class="social-buttons">
+                <a href="#" class="social-btn paypal"><i class="fa-brands fa-paypal"></i><span>PayPal</span></a>
+                <a href="#" class="social-btn reddit"><i class="fa-brands fa-reddit-alien"></i><span>Reddit</span></a>
+                <a href="#" class="social-btn telegram"><i class="fa-brands fa-telegram"></i><span>Telegram</span></a>
+                <a href="mailto:your@email.com" class="social-btn email"><i class="fa-solid fa-envelope"></i><span>Email</span></a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding-bottom: 4rem; opacity: 0.4; font-size: 0.8rem;">
+        &copy; 2026 Art by Aty. Created with precision.
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('active');
+        }
+
+        function showAll() {
+            const hidden = document.querySelectorAll('.hidden');
+            hidden.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.remove('hidden');
+                    item.style.animation = 'fadeInUp 0.8s ease forwards';
+                }, index * 80); // Quick staggered entry
+            });
+            document.getElementById('loadBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
