@@ -251,6 +251,70 @@
             margin-top: auto;
         }
 
+        /* --- COMMISSION INFO BOXES --- */
+        .info-container {
+            max-width: 900px;
+            margin: 4rem auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 35px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle accent on left of card */
+        .info-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 5px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-card p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .info-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-list li {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .info-list li i {
+            color: var(--secondary);
+            margin-top: 5px;
+        }
+
         /* --- CONTACT SECTION --- */
         .contact-container {
             max-width: 800px;
@@ -414,6 +478,7 @@
 
     <section id="pricing">
         <div class="section-header"><h2>Pricing</h2></div>
+        
         <div class="price-grid">
             <div class="price-card">
                 <h3>Sketch</h3>
@@ -437,6 +502,28 @@
                 <div class="bg-addon">+ $10 for Additional Background</div>
             </div>
         </div>
+
+        <div class="info-container">
+            
+            <div class="info-card">
+                <h3>How to commission me?</h3>
+                <p>In order to commission me you will firstly have to DM me (below you can find contact me tab), specify what type of drawing would you like (sketch, black and white or colored), the subject of the drawing, if you would like background.</p>
+            </div>
+
+            <div class="info-card">
+                <h3>IMPORTANT</h3>
+                <ul class="info-list">
+                    <li><i class="fa-solid fa-chevron-right"></i> Payment has to be made upfront</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> I will hand in the drawing within 7 days starting from the moment the payment was done</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Preferably no NSFW</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> I can do ANY STYLE OTHER THAN REALISM</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> I can do longer projects like comic books, illustrations, design etc</li>
+                    <li><i class="fa-solid fa-chevron-right"></i> Feel free to ask me anything!</li>
+                </ul>
+            </div>
+
+        </div>
+
     </section>
 
     <section id="contact">
