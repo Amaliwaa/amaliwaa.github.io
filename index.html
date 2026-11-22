@@ -459,21 +459,21 @@ function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localSto
    Put a picture address (or a data: image) between the quotes of any "proof" / "image" / "portrait" field.
    Leave it empty to keep the hand-drawn stand-in. */
 var CONFIG={
-  portrait:'',
-  contact:{email:'',linkedin:'',instagram:'',github:''},
+  portrait:'portrait.jpg',
+  contact:{email:'amaliwaaa@gmail.com',linkedin:'',instagram:'atyloves_art',github:''},
   sites:[
-    {id:'site1',url:'https://print-expresss.github.io/',image:'',art:'flowers',tape:'pink',sample:true},
-    {id:'site2',url:'https://anti-drog.github.io/',image:'',art:'cars',tape:'teal',sample:true},
-    {id:'site3',url:'https://geobrut.github.io/',image:'',art:'photo',tape:'mustard',sample:true}
+    {id:'site1',url:'https://print-expresss.github.io/',image:'printexpress.jpg',art:'flowers',tape:'pink',sample:true},
+    {id:'site2',url:'https://anti-drog.github.io/',image:'antidrog.jpg',art:'cars',tape:'teal',sample:true},
+    {id:'site3',url:'https://geobrut.github.io/',image:'geobrut.jpg',art:'photo',tape:'mustard',sample:true}
   ],
   contests:[
-    {id:'innov',proof:'',tape:'mustard',art:'medal',result:''},
-    {id:'onti',proof:'',tape:'pink',art:'medal',result:''},
-    {id:'veritas',proof:'',tape:'teal',art:'medal',result:''},
-    {id:'speech',proof:'',tape:'lilac',art:'medal',result:''}
+    {id:'innov',proof:'innov.jpg',tape:'mustard',art:'medal',result:''},
+    {id:'onti',proof:'onti.jpg',tape:'pink',art:'medal',result:''},
+    {id:'veritas',proof:'veritas.jpg',tape:'teal',art:'medal',result:''},
+    {id:'speech',proof:'speech.jpg',tape:'lilac',art:'medal',result:''}
   ],
   certs:[
-    {id:'c1',proof:'',feature:true},{id:'ecdl1',proof:''},{id:'ecdl2',proof:''},{id:'ecdl3',proof:''},{id:'ecdl4',proof:''}
+    {id:'c1',proof:'',feature:true},{id:'ecdl1',proof:'ecdl1.jpg'},{id:'ecdl2',proof:'ecdl2.jpg'},{id:'ecdl3',proof:'ecel3.jpg'},{id:'ecdl4',proof:'ecdl4.jpg'}
   ]
 };
 
@@ -675,7 +675,7 @@ var shown=0;
 ['email','linkedin','instagram','github'].forEach(function(k){
   var v=CONFIG.contact[k];if(!v)return;shown++;
   var li=document.createElement('li');
-  var val=k==='email'?'<a class="val" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':'<a class="val" href="'+esc(v)+'" target="_blank" rel="noopener noreferrer">'+esc(v.replace(/^https?:\/\//,''))+'</a>';
+  var val=k==='email'?'<a class="val" href="mailto:amaliwaaa@gmail.com'+esc(v)+'">'+esc(v)+'</a>':'<a class="val" href="'+esc(v)+'" target="_blank" rel="noopener noreferrer">'+esc(v.replace(/^https?:\/\//,''))+'</a>';
   li.innerHTML='<span class="lab" data-i18n="contact.'+k+'"></span>'+val+(k==='email'?'<button type="button" class="mini wob" data-copy="'+esc(v)+'" data-i18n="contact.copy"></button>':'');
   $('#contactList').appendChild(li);
 });
